@@ -1,0 +1,22 @@
+<div aria-label="FTCC Persona Filter" class="panel panel-persona-filter">
+    <div class="container">
+        <h1>{{ panel.heading }}</h1>
+        <form action="#" id="persona-filter" class="persona-filter" autocomplete="off">
+            <div class="pf-input-wrap">
+                <div class="ginput_container ginput_container_select">
+                    <label for="pf-identity" class="pf-inline-text">{{ panel.option-iaa-label }}</label>
+                    <select name="pf-identity" id="pf-identity">
+                        <option value="" class="placeholder" disabled selected>Please Select</option>
+                    </select>
+                </div>
+                <div class="ginput_container ginput_container_select">
+                    <label for="pf-topic" class="pf-inline-text">{{ panel.option-lf-label }}</label>
+                    <select name="pf-topic" id="pf-topic" disabled>
+                        <option value="" class="placeholder" disabled selected>Please Select</option>
+                    </select>
+                </div>
+            </div>
+            <input type="submit" value="Take your next step" class="btn" disabled>
+        </form>
+    </div>
+</div>
