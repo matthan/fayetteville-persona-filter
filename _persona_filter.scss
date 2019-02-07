@@ -1,0 +1,130 @@
+// Gradients
+@mixin gradient-partial($size, $direction, $color-start, $color-end) {
+    background: linear-gradient(to $direction, $color-start calc( (#{$size} * 1%) + 485px ), $color-end calc( (#{$size} * 1%) + 485px ));
+    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+        background: $color-start;
+    }
+}
+
+// Sass color map
+$COLORS: (
+    blue: (
+        base: #203e5a,
+        dark: #22f3eb,
+    ),
+    yellow: (
+        base: #f8e71c,
+        dark: #e6c800,
+    ),
+    grey: (
+        lighter: #f2f2f2,
+        light: #f2f2f2,
+        base: #9b9b9b,
+        dark: #4a4a4a,
+        darker: #222,
+    ),
+    white: (
+        base: #fdfdfd, // Use slightly off-white/off-black, more natural and easier on the eyes
+        pure: #fff,
+    ),
+    black: (
+        base: #020202,
+        pure: #000,
+    ),
+);
+
+// Palette color map retrieval function
+@function palette($color, $shade: base) { // Default shade: base
+    // Return warning if color is invalid
+    @if not map-has-key($COLORS, $color) {
+        @warn "There is no color mapped to '#{$color}'";
+        @return null;
+    }
+
+    // Grab shade map for given color
+    $color-map: map-get($COLORS, $color);
+    // Return warning if shade is invalid
+    @if not map-has-key($color-map, $shade) {
+        @warn "There is no '#{$shade}' for the color '#{$color}'";
+        @return null;
+    }
+
+    // Return the proper shade
+    @return map-get($color-map, $shade);
+}
+
+
+.panel-persona-filter {
+    padding-left: $gutter;
+    padding-right: $gutter;
+    @include gradient-partial(55, left, palette(yellow), palette(white));
+
+    @include breakpoint($phablet) {
+        .ginput_container_select::after {
+            right: 30px;
+        }
+    }
+
+    @include breakpoint($desktop) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    label {
+        display: block;
+        font-size: calcRem(22);
+        line-height: calcRem(16);
+
+        @include breakpoint($phablet) {
+            display: inline-block;
+        }
+    }
+
+    select {
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        @include breakpoint($phablet) {
+            margin: 15px;
+        }
+
+        &[disabled] {
+            color: palette(grey);
+            opacity: 0.4;
+        }
+    }
+
+    input[type="submit"] {
+        float: none;
+        margin: 16px 0 0;
+        background-color: palette(black);
+        color: palette(white);
+        transition: opacity $duration;
+
+        &[disabled] {
+            opacity: 0;
+        }
+    }
+
+    select,
+    .pf-input-wrap {
+        font-family: $display-font-alt;
+        font-size: calcRem(20);
+        font-weight: 700;
+
+        @include breakpoint($tablet) {
+            font-size: calcRem(24);
+        }
+    }
+
+    .pf-input-wrap {
+        @include breakpoint($phablet) {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .pf-inline-text {
+        display: inline-block;
+    }
+}
